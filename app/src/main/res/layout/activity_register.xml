@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="#4CAF50"
+            android:padding="16dp">
+            <ImageButton
+                android:id="@+id/menu_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/baseline_more_horiz_24"
+                android:contentDescription="Menu"
+                android:layout_gravity="start"/>
+            <TextView
+                android:id="@+id/tv_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="registracja"
+                android:textSize="24sp"
+                android:textColor="#FFFFFF"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="imie"
+            android:padding="8dp"
+            android:background="@drawable/bottom_border"
+            android:layout_marginBottom="8dp"
+            android:gravity="center_horizontal"
+            android:textAlignment="center"
+            android:inputType="textPersonName"/>
+
+        <EditText
+            android:id="@+id/et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="numer telefonu"
+            android:padding="8dp"
+            android:background="@drawable/bottom_border"
+            android:layout_marginBottom="8dp"
+            android:gravity="center_horizontal"
+            android:textAlignment="center"
+            android:inputType="phone"/>
+
+        <EditText
+            android:id="@+id/et_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="email"
+            android:padding="8dp"
+            android:background="@drawable/bottom_border"
+            android:layout_marginBottom="8dp"
+            android:gravity="center_horizontal"
+            android:textAlignment="center"
+            android:inputType="textEmailAddress"/>
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="haslo"
+            android:padding="8dp"
+            android:background="@drawable/bottom_border"
+            android:layout_marginBottom="8dp"
+            android:gravity="center_horizontal"
+            android:textAlignment="center"
+            android:inputType="textPassword"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:id="@+id/et_day"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="DD"
+                android:padding="8dp"
+                android:background="@drawable/bottom_border"
+                android:gravity="center_horizontal"
+                android:textAlignment="center"
+                android:inputType="number"
+                android:layout_marginEnd="4dp"/>
+
+            <EditText
+                android:id="@+id/et_month"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="MM"
+                android:padding="8dp"
+                android:background="@drawable/bottom_border"
+                android:gravity="center_horizontal"
+                android:textAlignment="center"
+                android:inputType="number"
+                android:layout_marginEnd="4dp"/>
+
+            <EditText
+                android:id="@+id/et_year"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="YYYY"
+                android:padding="8dp"
+                android:background="@drawable/bottom_border"
+                android:gravity="center_horizontal"
+                android:textAlignment="center"
+                android:inputType="number"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="registracja"
+            android:textColor="#FFFFFF"
+            android:padding="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/rounded_button"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="lub zarejestruj sie przez"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <View
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/circle_placeholder" />
+
+            <View
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/circle_placeholder" />
+
+            <View
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/circle_placeholder" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
