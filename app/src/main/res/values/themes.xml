@@ -11,4 +11,8 @@
         <item name="android:background">@drawable/edit_text_error_background</item>
         <item name="android:textColor">#FF0000</item>
     </style>
+    <style name="NavigationViewStyle" parent="Widget.Design.NavigationView">
+        <item name="itemTextColor">@color/nav_item_text</item>
+        <item name="itemBackground">@color/nav_item_background</item>
+    </style>
 </resources>
