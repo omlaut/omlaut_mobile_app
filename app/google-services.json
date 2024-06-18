@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "378928106101",
+    "project_id": "omlaut-mobile-app",
+    "storage_bucket": "omlaut-mobile-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378928106101:android:dd8ad1145684d717a2c63c",
+        "android_client_info": {
+          "package_name": "com.example.omlaut_mobile_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKvc2hIIxLbpdIdmrGeZD_ZZ6uTuKziRw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
