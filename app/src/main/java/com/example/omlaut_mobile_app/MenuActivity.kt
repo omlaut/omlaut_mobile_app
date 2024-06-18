@@ -1,7 +1,7 @@
 package com.example.omlaut_mobile_app
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.Gravity
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -47,7 +47,9 @@ class MenuActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_profile -> {
-                    // Логика перехода на страницу профиля
+                    // Переход на страницу профиля
+                    val intent = Intent(this, ProfileActivity::class.java)
+                    startActivity(intent)
                     true
                 }
                 R.id.nav_language -> {
