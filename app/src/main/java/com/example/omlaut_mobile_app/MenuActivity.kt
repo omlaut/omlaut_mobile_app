@@ -43,7 +43,8 @@ class MenuActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_cart -> {
-                    // Логика перехода на страницу корзины
+                    val intent = Intent(this, CartActivity::class.java)
+                    startActivity(intent)
                     true
                 }
                 R.id.nav_profile -> {
@@ -78,10 +79,9 @@ class MenuActivity : AppCompatActivity() {
 
     private fun getDummyProducts(): List<Product> {
         return listOf(
-            Product("Malinowy biskopt z ziolami", "od 8 zl", "120g"),
-            Product("Malinowy biskopt z ziolami", "od 8 zl", "120g"),
-            Product("Malinowy biskopt z ziolami", "od 8 zl", "120g"),
-            Product("Malinowy biskopt z ziolami", "od 8 zl", "120g")
+            Product("Malinowy biskopt z ziolami", 10, "120g", "Экстра вкус нашего торта Наполеон, удивит вас. Французское пирожное."),
+            Product("Malinowy latte", 15, "220ml", "без сиропа; без лактозы"),
+            Product("Malinowy biskopt z ziolami", 20, "250gr", "Экстра вкус нашего торта Наполеон, удивит вас. Французское пирожное.")
         )
     }
 }
