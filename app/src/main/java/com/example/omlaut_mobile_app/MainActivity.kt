@@ -15,6 +15,5 @@ class MainActivity : ComponentActivity() {
         setContentView(R.layout.activity_main)
 
         val headers = NavigationInitialaizer(this, pageName)
-        headers.init()
     }
 }

@@ -8,10 +8,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class LoginActivity : AppCompatActivity() {
+    private val page_name = "login"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_login)
+
+        val headers = NavigationInitialaizer(this, page_name)
 
         val emailPhoneEditText = findViewById<EditText>(R.id.et_login_email_phone)
         val passwordEditText = findViewById<EditText>(R.id.et_login_password)

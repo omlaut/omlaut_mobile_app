@@ -27,14 +27,11 @@ import com.google.android.material.navigation.NavigationView;
 class NavigationInitialaizer(
     private val activity: Activity,
     private val pageName: String
-) {
-
-    fun init() {
+) { init {
         val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
 
         val drawerLayout = rootView.findViewById<DrawerLayout>(R.id.Drawer)
         val navigationView = rootView.findViewById<NavigationView>(R.id.main_navigation_view)
-        Log.d("sdsg", "" + drawerLayout + navigationView)
 
         setupHeader()
         setupDrawerContent(activity, navigationView, drawerLayout)
