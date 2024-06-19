@@ -155,23 +155,23 @@
             android:orientation="horizontal"
             android:gravity="center">
 
-            <View
+            <ImageView
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_margin="8dp"
-                android:background="@drawable/circle_placeholder" />
+                android:src="@drawable/google"/>
 
-            <View
+            <ImageView
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_margin="8dp"
-                android:background="@drawable/circle_placeholder" />
+                android:src="@drawable/facebook" />
 
-            <View
+            <ImageView
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_margin="8dp"
-                android:background="@drawable/circle_placeholder" />
+                android:src="@drawable/instagram" />
         </LinearLayout>
 
     </LinearLayout>
