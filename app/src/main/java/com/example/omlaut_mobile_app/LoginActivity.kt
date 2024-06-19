@@ -12,9 +12,12 @@ import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import okhttp3.*
+import java.io.IOException
 
 class LoginActivity : AppCompatActivity() {
     private val page_name = "login"
+    private val client = OkHttpClient()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,15 +53,41 @@ class LoginActivity : AppCompatActivity() {
 
             if (emailPhone.isNotEmpty() && password.isNotEmpty()) {
                 // Логика логина пользователя
+
                 Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
 
                 // Переход на страницу меню
                 val intent = Intent(this, MenuActivity::class.java)
                 startActivity(intent)
                 finish()
+
+                // Выполнение тестового запроса
+                performTestRequest()
             } else {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun performTestRequest() {
+        val request = Request.Builder()
+            .url("https://8.8.8.8")
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+                println("Request failed: ${e.message}")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body?.string()
+                    println("Response: $responseBody")
+                } else {
+                    println("Response not successful: ${response.code}")
+                }
+            }
+        })
     }
 }
