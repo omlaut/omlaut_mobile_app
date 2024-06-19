@@ -12,18 +12,17 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class ProductDetailsFragment : BottomSheetDialogFragment() {
 
-    private lateinit var productName: String
-    private lateinit var productWeight: String
-    private lateinit var productDescription: String
-    private lateinit var productPrice: String
+    private lateinit var product: Product
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            productName = it.getString("productName") ?: ""
-            productWeight = it.getString("productWeight") ?: ""
-            productDescription = it.getString("productDescription") ?: ""
-            productPrice = it.getString("productPrice") ?: ""
+            product = Product(
+                name = it.getString("productName") ?: "",
+                weight = it.getString("productWeight") ?: "",
+                description = it.getString("productDescription") ?: "",
+                price = it.getString("productPrice")?.toIntOrNull() ?: 0
+            )
         }
     }
 
@@ -45,14 +44,17 @@ class ProductDetailsFragment : BottomSheetDialogFragment() {
         val orderButton = view.findViewById<Button>(R.id.btn_order)
 
         // Задайте данные продукта
-        productNameTextView.text = productName
-        productWeightTextView.text = productWeight
-        productDescriptionTextView.text = productDescription
-        productPriceTextView.text = productPrice
+        productNameTextView.text = product.name
+        productWeightTextView.text = product.weight
+        productDescriptionTextView.text = product.description
+        productPriceTextView.text = "${product.price} zl"
 
         // Добавьте логику для кнопки заказа
         orderButton.setOnClickListener {
-            val intent = Intent(context, MapActivity::class.java)
+            Cart.addItem(product)
+            dismiss()
+            // Переход обратно в MenuActivity
+            val intent = Intent(activity, MenuActivity::class.java)
             startActivity(intent)
         }
     }
@@ -65,7 +67,7 @@ class ProductDetailsFragment : BottomSheetDialogFragment() {
                     putString("productName", product.name)
                     putString("productWeight", product.weight)
                     putString("productDescription", product.description)
-                    putString("productPrice", product.price)
+                    putString("productPrice", product.price.toString())
                 }
             }
     }

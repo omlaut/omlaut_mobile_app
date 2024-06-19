@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-data class Product(val name: String, val price: String, val weight: String, val description: String = "Экстра вкус нашего торта Наполеон, удивит вас. Французское пирожное.")
+data class Product(val name: String, val price: Int, val weight: String, val description: String = "Экстра вкус нашего торта Наполеон, удивит вас. Французское пирожное.")
 
 class ProductAdapter(private val products: List<Product>, private val onProductClick: (Product) -> Unit) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
@@ -19,7 +19,7 @@ class ProductAdapter(private val products: List<Product>, private val onProductC
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = products[position]
         holder.productName.text = product.name
-        holder.productPrice.text = product.price
+        holder.productPrice.text = "${product.price} zł"
         holder.productWeight.text = product.weight
         holder.itemView.setOnClickListener {
             onProductClick(product)

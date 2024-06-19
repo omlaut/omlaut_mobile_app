@@ -1,7 +1,7 @@
 package com.example.omlaut_mobile_app
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.Gravity
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -29,7 +29,7 @@ class MenuActivity : AppCompatActivity() {
                 drawerLayout.openDrawer(GravityCompat.START)
             }
         }
-
+        
 //        navigationView.setNavigationItemSelectedListener { menuItem ->
 //            menuItem.isChecked = true
 //            drawerLayout.closeDrawers()
@@ -76,10 +76,9 @@ class MenuActivity : AppCompatActivity() {
 
     private fun getDummyProducts(): List<Product> {
         return listOf(
-            Product("Malinowy biskopt z ziolami", "od 8 zl", "120g"),
-            Product("Malinowy biskopt z ziolami", "od 8 zl", "120g"),
-            Product("Malinowy biskopt z ziolami", "od 8 zl", "120g"),
-            Product("Malinowy biskopt z ziolami", "od 8 zl", "120g")
+            Product("Malinowy biskopt z ziolami", 10, "120g", "Экстра вкус нашего торта Наполеон, удивит вас. Французское пирожное."),
+            Product("Malinowy latte", 15, "220ml", "без сиропа; без лактозы"),
+            Product("Malinowy biskopt z ziolami", 20, "250gr", "Экстра вкус нашего торта Наполеон, удивит вас. Французское пирожное.")
         )
     }
 }
