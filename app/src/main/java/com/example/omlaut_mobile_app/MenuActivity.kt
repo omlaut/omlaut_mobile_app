@@ -29,45 +29,42 @@ class MenuActivity : AppCompatActivity() {
                 drawerLayout.openDrawer(GravityCompat.START)
             }
         }
-
-        navigationView.setNavigationItemSelectedListener { menuItem ->
-            menuItem.isChecked = true
-            drawerLayout.closeDrawers()
-            when (menuItem.itemId) {
-                R.id.nav_home -> {
-                    // Логика перехода на главную страницу
-                    true
-                }
-                R.id.nav_menu -> {
-                    // Логика перехода на страницу меню
-                    true
-                }
-                R.id.nav_cart -> {
-                    val intent = Intent(this, CartActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-                R.id.nav_profile -> {
-                    // Переход на страницу профиля
-                    val intent = Intent(this, ProfileActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-                R.id.nav_language -> {
-                    // Логика изменения языка
-                    true
-                }
-                R.id.nav_logout -> {
-                    // Логика выхода из аккаунта
-                    true
-                }
-                R.id.nav_about -> {
-                    // Логика перехода на страницу "о нас"
-                    true
-                }
-                else -> false
-            }
-        }
+        
+//        navigationView.setNavigationItemSelectedListener { menuItem ->
+//            menuItem.isChecked = true
+//            drawerLayout.closeDrawers()
+//            when (menuItem.itemId) {
+//                R.id.nav_home -> {
+//                    // Логика перехода на главную страницу
+//                    true
+//                }
+//                R.id.nav_menu -> {
+//                    // Логика перехода на страницу меню
+//                    true
+//                }
+//                R.id.nav_cart -> {
+//                    // Логика перехода на страницу корзины
+//                    true
+//                }
+//                R.id.nav_profile -> {
+//                    // Логика перехода на страницу профиля
+//                    true
+//                }
+//                R.id.nav_language -> {
+//                    // Логика изменения языка
+//                    true
+//                }
+//                R.id.nav_logout -> {
+//                    // Логика выхода из аккаунта
+//                    true
+//                }
+//                R.id.nav_about -> {
+//                    // Логика перехода на страницу "о нас"
+//                    true
+//                }
+//                else -> false
+//            }
+//        }
 
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = GridLayoutManager(this, 2)

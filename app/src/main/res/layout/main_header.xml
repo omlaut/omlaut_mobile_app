@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_header_constraint_layout"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <ImageView
+        android:id="@+id/main_header_side_button"
+        android:layout_width="56dp"
+        android:layout_height="35dp"
+        android:layout_gravity="start"
+        android:layout_marginStart="16dp"
+        android:layout_weight="0"
+        android:background="@color/omlaut_green"
+        android:elevation="1dp"
+        app:layout_constraintBottom_toBottomOf="@+id/main_header_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/main_header_text"
+        android:src="@drawable/baseline_more_horiz_24"/>
+
+    <TextView
+        android:id="@+id/main_header_text"
+        android:layout_width="412dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:background="@color/omlaut_green"
+        android:gravity="center"
+        android:text="Main_page"
+        android:textColor="@color/white"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
