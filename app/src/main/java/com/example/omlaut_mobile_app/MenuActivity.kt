@@ -1,70 +1,40 @@
 package com.example.omlaut_mobile_app
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.navigation.NavigationView
 
 class MenuActivity : AppCompatActivity() {
-
-    private lateinit var drawerLayout: DrawerLayout
+    private val page_name = "Catalog"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
 
-        drawerLayout = findViewById(R.id.drawer_layout)
-        val navigationView = findViewById<NavigationView>(R.id.navigation_view)
-        val menuButton = findViewById<ImageButton>(R.id.menu_button)
-
-        menuButton.setOnClickListener {
-            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                drawerLayout.closeDrawer(GravityCompat.START)
-            } else {
-                drawerLayout.openDrawer(GravityCompat.START)
-            }
+        val headerButton = findViewById<ImageView>(R.id.main_header_side_button)
+        headerButton.setOnClickListener {
+            val drawerLayout = findViewById<DrawerLayout>(R.id.Drawer)
+            drawerLayout.openDrawer(GravityCompat.START)
         }
-        
-//        navigationView.setNavigationItemSelectedListener { menuItem ->
-//            menuItem.isChecked = true
-//            drawerLayout.closeDrawers()
-//            when (menuItem.itemId) {
-//                R.id.nav_home -> {
-//                    // Логика перехода на главную страницу
-//                    true
-//                }
-//                R.id.nav_menu -> {
-//                    // Логика перехода на страницу меню
-//                    true
-//                }
-//                R.id.nav_cart -> {
-//                    // Логика перехода на страницу корзины
-//                    true
-//                }
-//                R.id.nav_profile -> {
-//                    // Логика перехода на страницу профиля
-//                    true
-//                }
-//                R.id.nav_language -> {
-//                    // Логика изменения языка
-//                    true
-//                }
-//                R.id.nav_logout -> {
-//                    // Логика выхода из аккаунта
-//                    true
-//                }
-//                R.id.nav_about -> {
-//                    // Логика перехода на страницу "о нас"
-//                    true
-//                }
-//                else -> false
-//            }
-//        }
+
+        if (savedInstanceState == null) {
+            val bundle = bundleOf("some_int" to 0)
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main_navigation_view, NavigationDrawerFragment().apply {
+                    arguments = bundle
+                })
+                .commit()
+            println("lala")
+        }
+
+        val headerText = findViewById<TextView>(R.id.main_header_text)
+        headerText.text = page_name
 
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = GridLayoutManager(this, 2)
