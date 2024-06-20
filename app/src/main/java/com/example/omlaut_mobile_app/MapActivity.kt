@@ -1,8 +1,15 @@
 package com.example.omlaut_mobile_app
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -10,6 +17,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.app.NotificationCompat
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -63,6 +71,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         orderButton.setOnClickListener {
             Toast.makeText(this, "Order placed", Toast.LENGTH_SHORT).show()
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                sendLocalNotification()
+            }, 5000)
         }
     }
 
@@ -103,5 +115,31 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             map.addMarker(MarkerOptions().position(place.latLng!!).title(place.name))
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(place.latLng, 15f))
         }
+    }
+
+    private fun sendLocalNotification() {
+        val channelId = "default_channel_id"
+        val notificationId = 1
+
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        }
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
+
+        val notificationBuilder = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle("Order Status")
+            .setContentText("Your order has been successfully placed.")
+            .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
+
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(channelId, "Order Notifications", NotificationManager.IMPORTANCE_DEFAULT)
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        notificationManager.notify(notificationId, notificationBuilder.build())
     }
 }
