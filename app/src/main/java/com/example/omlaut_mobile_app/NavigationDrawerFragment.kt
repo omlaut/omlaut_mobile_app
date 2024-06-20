@@ -60,6 +60,18 @@ class NavigationDrawerFragment : Fragment() {
                     navigateTo(LoginActivity::class.java)
                     true
                 }
+                R.id.link_cart_menu -> {
+                    navigateTo(CartActivity::class.java)
+                    true
+                }
+                R.id.link_profile_manu -> {
+                    navigateTo(ProfileActivity::class.java)
+                    true
+                }
+                R.id.link_catalog_menu -> {
+                    navigateTo(MenuActivity::class.java)
+                    true
+                }
                 else -> false
             }
         }

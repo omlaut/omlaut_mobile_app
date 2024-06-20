@@ -10,4 +10,6 @@
     <color name="nav_item_background">#FFFFFF</color>
     <color name="nav_item_background_selected">#607154</color>
     <color name="omlaut_green">#54753E</color>
+    <color name="omlaut_grey">#333232</color>
+    <color name="white_grey">#9F9F9F</color>
 </resources>

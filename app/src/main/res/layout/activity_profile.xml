@@ -4,8 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".ProfileActivity"
     android:id="@+id/Drawer"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    tools:openDrawer="start">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,11 +42,15 @@
             android:id="@+id/profile_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="SAVELII"
-            android:textSize="18sp"
-            android:layout_marginBottom="16dp"
+            android:textSize="20sp"
+            android:layout_marginBottom="1dp"
             android:background="@null"
             android:textColor="@android:color/black"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/omlaut_grey" />
 
         <TextView
             android:layout_width="match_parent"
@@ -60,38 +66,79 @@
             android:orientation="horizontal"
             android:layout_marginBottom="16dp">
 
-            <TextView
-                android:id="@+id/profile_birth_day"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="03"
-                android:background="@null"
-                android:textColor="@android:color/black"
-                android:gravity="center"
-                android:padding="8dp"/>
+                android:orientation="vertical"
+                android:layout_marginEnd="10dp">
 
-            <TextView
-                android:id="@+id/profile_birth_month"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="07"
-                android:background="@null"
-                android:textColor="@android:color/black"
-                android:gravity="center"
-                android:padding="8dp"/>
+                <TextView
+                    android:id="@+id/profile_birth_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:background="@null"
+                    android:textColor="@android:color/black"
+                    android:gravity="center"
+                    android:padding="8dp"/>
 
-            <TextView
-                android:id="@+id/profile_birth_year"
-                android:layout_width="0dp"
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/omlaut_grey" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="2003"
-                android:background="@null"
-                android:textColor="@android:color/black"
-                android:gravity="center"
-                android:padding="8dp"/>
+                android:orientation="vertical"
+                android:layout_marginEnd="10dp">
+
+                <TextView
+                    android:id="@+id/profile_birth_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:background="@null"
+                    android:textColor="@android:color/black"
+                    android:gravity="center"
+                    android:padding="8dp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/omlaut_grey" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginEnd="10dp">
+
+                <TextView
+                    android:id="@+id/profile_birth_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:background="@null"
+                    android:textColor="@android:color/black"
+                    android:gravity="center"
+                    android:padding="8dp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/omlaut_grey" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <TextView
@@ -114,11 +161,15 @@
             android:id="@+id/profile_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="+48728091017"
-            android:textSize="18sp"
-            android:layout_marginBottom="16dp"
+            android:textSize="20sp"
+            android:layout_marginBottom="1dp"
             android:background="@null"
             android:textColor="@android:color/black"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/omlaut_grey" />
 
         <TextView
             android:layout_width="match_parent"
@@ -132,11 +183,15 @@
             android:id="@+id/profile_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="sovvva7@gmail.com"
-            android:textSize="18sp"
-            android:layout_marginBottom="16dp"
+            android:textSize="20sp"
+            android:layout_marginBottom="1dp"
             android:background="@null"
             android:textColor="@android:color/black"/>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/omlaut_grey" />
 
         <Button
             android:id="@+id/profile_order_history_button"

@@ -1,113 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@android:color/white"
-    tools:context=".CartActivity">
+    tools:context=".CartActivity"
+    android:id="@+id/Drawer"
+    tools:openDrawer="start">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:background="#4CAF50"
-        android:padding="16dp">
-
-        <ImageButton
-            android:id="@+id/menu_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/baseline_more_horiz_24"
-            android:contentDescription="Menu" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="koszyk"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:textSize="24sp"
-            android:gravity="center" />
-    </LinearLayout>
-
-    <ScrollView
+        android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:background="@color/white"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <include layout="@layout/main_header"
+            android:id="@+id/main_header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="wrap_content"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/border_background"
-                android:padding="16dp"
-                android:layout_margin="16dp">
-
-                <TextView
-                    android:id="@+id/delivery_info"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="dostawa dzisiaj o 18:00, ul. kazimierzowska 51 pietro 1, lok 7"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp"
-                    android:gravity="center"
-                    android:layout_marginBottom="16dp" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp" />
-
-                <TextView
-                    android:id="@+id/total_price"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="suma: 0zl"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:gravity="center"
-                    android:layout_marginBottom="16dp" />
+                android:padding="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center">
+                    android:orientation="vertical"
+                    android:background="@drawable/border_background"
+                    android:padding="16dp"
+                    android:layout_margin="16dp">
 
-                    <Button
-                        android:id="@+id/continue_shopping_button"
-                        android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/delivery_info"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="kontinuowac zakupy"
-                        android:background="@drawable/rounded_button"
-                        android:textColor="@android:color/white"
-                        android:layout_marginEnd="8dp" />
+                        android:text="dostawa dzisiaj o 18:00, ul. kazimierzowska 51 pietro 1, lok 7"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:layout_marginBottom="16dp" />
 
-                    <Button
-                        android:id="@+id/pay_button"
-                        android:layout_width="0dp"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="oplacic"
-                        android:background="@drawable/rounded_button"
-                        android:textColor="@android:color/white"
-                        android:layout_marginStart="8dp" />
+                        android:layout_marginBottom="16dp" />
+
+                    <TextView
+                        android:id="@+id/total_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="suma: 0zl"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:gravity="center"
+                        android:layout_marginBottom="16dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/continue_shopping_button"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="kontinuowac zakupy"
+                            android:background="@drawable/rounded_button"
+                            android:textColor="@android:color/white"
+                            android:layout_marginEnd="8dp" />
+
+                        <Button
+                            android:id="@+id/pay_button"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="oplacic"
+                            android:background="@drawable/rounded_button"
+                            android:textColor="@android:color/white"
+                            android:layout_marginStart="8dp" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
+
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/main_navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_gravity="start" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

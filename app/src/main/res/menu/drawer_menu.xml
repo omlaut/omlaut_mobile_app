@@ -9,13 +9,13 @@
     tools:showIn="navigation_view">
     <group>
         <item android:title="strona glowna" android:id="@+id/link_main_menu_menu"/>
+        <item android:title="profile" android:id="@+id/link_profile_manu" android:visible="true"/>
         <item android:title="menu" android:id="@+id/link_catalog_menu"/>
         <item android:title="koszyk" android:id="@+id/link_cart_menu"/>
     </group>
     <group>
         <item android:title=" ">
             <menu>
-                <item android:title="profile" android:id="@+id/link_profile_manu" android:visible="false"/>
                 <item android:title="jezyk" android:id="@+id/language_selector_menu"/>
             </menu>
         </item>
