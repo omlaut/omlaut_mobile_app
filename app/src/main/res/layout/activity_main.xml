@@ -46,6 +46,7 @@
                     app:tabIndicatorHeight="0dp" />
 
                 <Button
+                    android:id="@+id/product_button"
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
