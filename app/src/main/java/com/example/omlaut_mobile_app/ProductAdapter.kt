@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-data class Product(val name: String, val price: Int, val weight: String, val description: String = "Экстра вкус нашего торта Наполеон, удивит вас. Французское пирожное.")
+data class Product(val id:String, val name: String, val price: Int, val weight: String, val description: String)
 
 class ProductAdapter(private val products: List<Product>, private val onProductClick: (Product) -> Unit) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
@@ -24,7 +24,7 @@ class ProductAdapter(private val products: List<Product>, private val onProductC
         holder.itemView.setOnClickListener {
             onProductClick(product)
         }
-        // Для изображения можно использовать любую библиотеку для загрузки изображений, например, Glide или Picasso
+
     }
 
     override fun getItemCount(): Int {

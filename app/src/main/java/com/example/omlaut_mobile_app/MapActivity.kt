@@ -40,7 +40,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
 
-        // Initialize the SDK
         if (!Places.isInitialized()) {
             Places.initialize(applicationContext, getString(R.string.google_maps_key))
         }
@@ -50,14 +49,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         searchButton = findViewById(R.id.search_button)
         orderButton = findViewById(R.id.order_button)
 
-        // Set up map fragment
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        // Request location permission
         requestLocationPermission()
 
-        // Set up search button click listener
         searchButton.setOnClickListener {
             val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)
             val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
@@ -65,9 +61,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
         }
 
-        // Set up order button click listener
         orderButton.setOnClickListener {
-            // Handle order logic here
             Toast.makeText(this, "Order placed", Toast.LENGTH_SHORT).show()
         }
     }
@@ -80,12 +74,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-        // Add a marker to a default location and move the camera
-        val defaultLocation = LatLng(-34.0, 151.0)
-        map.addMarker(MarkerOptions().position(defaultLocation).title("Marker in Sydney"))
+        val defaultLocation = LatLng(52.248960, 21.014829)
+        map.addMarker(MarkerOptions().position(defaultLocation).title(""))
         map.moveCamera(CameraUpdateFactory.newLatLng(defaultLocation))
 
-        // Enable location if permission granted
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             map.isMyLocationEnabled = true
         }

@@ -6,7 +6,6 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -105,42 +104,69 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val responseBody = response.body?.string()
-                Log.d("LoginActivity", "Response: $responseBody")
+                if (response.isSuccessful) {
+                    val responseBody = response.body?.string()
+                    val json = JSONObject(responseBody)
 
-                if (response.isSuccessful && responseBody != null) {
-                    val jsonObject = JSONObject(responseBody)
-                    if (jsonObject.has("accessToken")) {
-                        val token = jsonObject.getString("accessToken")
+                    if (json.has("accessToken")) {
+                        val token = json.getString("accessToken")
                         sessionManager.saveAuthToken(token)
-
-                        runOnUiThread {
-                            Toast.makeText(this@LoginActivity, "Login Successful", Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        }
+                        fetchUserProfile(token)
                     } else {
-                        handleLoginError(responseBody)
+                        runOnUiThread {
+                            Toast.makeText(this@LoginActivity, "Login failed", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 } else {
+                    val responseBody = response.body?.string()
+                    val json = JSONObject(responseBody)
+                    val message = json.getString("message")
+
                     runOnUiThread {
-                        Toast.makeText(this@LoginActivity, "Login failed: ${response.message}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         })
     }
 
-    private fun handleLoginError(responseBody: String?) {
-        runOnUiThread {
-            val jsonObject = responseBody?.let { JSONObject(it) }
-            val errorMessage = when (jsonObject?.getString("message")) {
-                "User not found" -> "User not found"
-                "Password is not valid" -> "Password is not valid"
-                else -> "Login failed: Unknown error"
+    private fun fetchUserProfile(token: String) {
+        val request = Request.Builder()
+            .url("http://5.22.223.21:80/users/get")
+            .addHeader("Authorization", token)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+                runOnUiThread {
+                    Toast.makeText(this@LoginActivity, "Failed to load profile", Toast.LENGTH_SHORT).show()
+                }
             }
-            Toast.makeText(this@LoginActivity, errorMessage, Toast.LENGTH_SHORT).show()
-        }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body?.string()
+                    val json = JSONObject(responseBody)
+                    val message = json.getJSONObject("message")
+
+                    val name = message.getString("name")
+                    val phone = message.getString("Phone_number")
+
+                    sessionManager.saveUserDetails(User(name, phone))
+
+                    runOnUiThread {
+                        Toast.makeText(this@LoginActivity, "Login Successful", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                } else {
+                    runOnUiThread {
+                        Toast.makeText(this@LoginActivity, "Failed to load profile", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
     }
 }
