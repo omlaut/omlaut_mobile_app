@@ -1,5 +1,6 @@
 package com.example.omlaut_mobile_app
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
@@ -25,6 +26,15 @@ class MenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
+
+        val sessionManager = SessionManager(this)
+        val authToken = sessionManager.fetchAuthToken()
+
+        if (authToken.isNullOrEmpty()) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
 
         val headerButton = findViewById<ImageView>(R.id.main_header_side_button)

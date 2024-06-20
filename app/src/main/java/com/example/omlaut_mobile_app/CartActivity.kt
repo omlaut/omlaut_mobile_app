@@ -34,6 +34,14 @@ class CartActivity : AppCompatActivity() {
         setContentView(R.layout.activity_cart)
         sessionManager = SessionManager(this)
 
+        val authToken = sessionManager.fetchAuthToken()
+
+        if (authToken.isNullOrEmpty()) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         val headerButton = findViewById<ImageView>(R.id.main_header_side_button)
         headerButton.setOnClickListener {
             val drawerLayout = findViewById<DrawerLayout>(R.id.Drawer)

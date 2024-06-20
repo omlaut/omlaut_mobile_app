@@ -49,6 +49,13 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
 
         sessionManager = SessionManager(this)
+        val authToken = sessionManager.fetchAuthToken()
+
+        if (authToken.isNullOrEmpty()) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         val headerButton = findViewById<ImageView>(R.id.main_header_side_button)
         headerButton.setOnClickListener {
@@ -223,9 +230,9 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun selectImage() {
-        val options = arrayOf("Сделать фото", "Выбрать из галереи", "Отмена")
+        val options = arrayOf("Zrób zdjęcie", "Wybierz z galerii", "Anulowanie")
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Выберите фотографию профиля")
+        builder.setTitle("Wybierz zdjęcie profilowe")
         builder.setItems(options) { dialog, which ->
             when (which) {
                 0 -> {
