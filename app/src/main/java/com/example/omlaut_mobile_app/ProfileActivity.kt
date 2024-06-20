@@ -83,7 +83,6 @@ class ProfileActivity : AppCompatActivity() {
         val headerText = findViewById<TextView>(R.id.main_header_text)
         headerText.text = page_name
 
-        // Получение ссылок на элементы интерфейса
         val profileName: TextView = findViewById(R.id.profile_name)
         val profileBirthDay: TextView = findViewById(R.id.profile_birth_day)
         val profileBirthMonth: TextView = findViewById(R.id.profile_birth_month)
@@ -106,7 +105,6 @@ class ProfileActivity : AppCompatActivity() {
             showDeleteAccountConfirmation()
         }
 
-        // Выполнение запроса данных пользователя
         fetchUserProfile(profileName, profileBirthDay, profileBirthMonth, profileBirthYear, profilePhone, profileEmail)
     }
 
@@ -143,7 +141,7 @@ class ProfileActivity : AppCompatActivity() {
                     val phone = jsonObject.getString("Phone_number")
                     val email = jsonObject.getString("email")
 
-                    // Разделение даты рождения на день, месяц и год
+
                     val birthDateParts = birthDate.split("-")
                     val year = birthDateParts[0]
                     val month = birthDateParts[1]
@@ -342,14 +340,12 @@ class ProfileActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 REQUEST_IMAGE_CAPTURE -> {
-                    // Фотография сделана с камеры, сохраняем путь к файлу
                     savePhotoPath(currentPhotoPath)
                     val imageFile = File(currentPhotoPath)
                     val imageBitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
                     profilePhoto.setImageBitmap(imageBitmap)
                 }
                 REQUEST_IMAGE_PICK -> {
-                    // Фотография выбрана из галереи, сохраняем путь к файлу
                     data?.data?.let { uri ->
                         val imageFile = File(getRealPathFromURI(uri))
                         savePhotoPath(imageFile.absolutePath)
@@ -373,20 +369,18 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun createImageFile(): File {
-        // Create an image file name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: throw IOException("Could not access external storage")
 
-        // Create the storage directory if it does not exist
         if (!storageDir.exists()) {
             storageDir.mkdirs()
         }
 
         val imageFileName = "JPEG_${timeStamp}_"
         return File.createTempFile(
-            imageFileName, /* prefix */
-            ".jpg", /* suffix */
-            storageDir /* directory */
+            imageFileName,
+            ".jpg",
+            storageDir
         ).apply {
             currentPhotoPath = absolutePath
         }

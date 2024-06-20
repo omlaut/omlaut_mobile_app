@@ -63,9 +63,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         val headerText = findViewById<TextView>(R.id.main_header_text)
         headerText.text = page_name
 
-        // Promo slider setup
         val viewPager = findViewById<ViewPager>(R.id.promo_viewpager)
-        val images = listOf(R.drawable.promo1, R.drawable.promo2, R.drawable.promo3) // Replace with your promo images
+        val images = listOf(R.drawable.promo1, R.drawable.promo2, R.drawable.promo3)
         val adapter = PromoAdapter(this, images)
         viewPager.adapter = adapter
 
@@ -80,11 +79,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             tab.requestLayout()
         }
 
-        // Map setup
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        // Social media links setup
         setupSocialMediaLinks()
     }
 
@@ -106,10 +103,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
 
-        // Add markers for each location
         val locations = listOf(
-            LatLng(52.203929, 21.014588), // Example location 1
-            LatLng(52.231202, 21.002306)   // Example location 2
+            LatLng(52.203929, 21.014588),
+            LatLng(52.231202, 21.002306)
         )
 
         for (location in locations) {
@@ -118,12 +114,11 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             googleMap.addMarker(markerOptions)
         }
 
-        // Move camera to the first location
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locations[0], 12f))
     }
 
     private fun createCustomMarker(): Bitmap {
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.logo)
-        return Bitmap.createScaledBitmap(bitmap, 100, 100, false) // Resize the image as needed
+        return Bitmap.createScaledBitmap(bitmap, 100, 100, false)
     }
 }
