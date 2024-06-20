@@ -25,7 +25,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         super.onNewToken(token)
         Log.d("FCM Token", "Refreshed token: $token")
-        // Здесь вы можете отправить новый токен на ваш сервер, если нужно
     }
 
     private fun sendNotification(title: String?, message: String?) {
