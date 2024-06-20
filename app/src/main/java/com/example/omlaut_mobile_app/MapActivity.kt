@@ -1,8 +1,15 @@
 package com.example.omlaut_mobile_app
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -10,6 +17,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.app.NotificationCompat
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -40,7 +48,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
 
-        // Initialize the SDK
         if (!Places.isInitialized()) {
             Places.initialize(applicationContext, getString(R.string.google_maps_key))
         }
@@ -50,14 +57,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         searchButton = findViewById(R.id.search_button)
         orderButton = findViewById(R.id.order_button)
 
-        // Set up map fragment
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        // Request location permission
         requestLocationPermission()
 
-        // Set up search button click listener
         searchButton.setOnClickListener {
             val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)
             val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
@@ -65,10 +69,12 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
         }
 
-        // Set up order button click listener
         orderButton.setOnClickListener {
-            // Handle order logic here
             Toast.makeText(this, "Order placed", Toast.LENGTH_SHORT).show()
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                sendLocalNotification()
+            }, 5000)
         }
     }
 
@@ -80,12 +86,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-        // Add a marker to a default location and move the camera
-        val defaultLocation = LatLng(-34.0, 151.0)
-        map.addMarker(MarkerOptions().position(defaultLocation).title("Marker in Sydney"))
+        val defaultLocation = LatLng(52.248960, 21.014829)
+        map.addMarker(MarkerOptions().position(defaultLocation).title(""))
         map.moveCamera(CameraUpdateFactory.newLatLng(defaultLocation))
 
-        // Enable location if permission granted
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             map.isMyLocationEnabled = true
         }
@@ -111,5 +115,31 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             map.addMarker(MarkerOptions().position(place.latLng!!).title(place.name))
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(place.latLng, 15f))
         }
+    }
+
+    private fun sendLocalNotification() {
+        val channelId = "default_channel_id"
+        val notificationId = 1
+
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        }
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
+
+        val notificationBuilder = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle("Order Status")
+            .setContentText("Your order has been successfully placed.")
+            .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
+
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(channelId, "Order Notifications", NotificationManager.IMPORTANCE_DEFAULT)
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        notificationManager.notify(notificationId, notificationBuilder.build())
     }
 }

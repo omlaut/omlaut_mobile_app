@@ -1,5 +1,6 @@
 package com.example.omlaut_mobile_app
 
+
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
@@ -10,6 +11,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.content.DialogInterface
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -27,6 +29,14 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import java.util.Locale
 import android.Manifest
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import okhttp3.*
+import org.json.JSONObject
+import java.io.IOException
 
 class ProfileActivity : AppCompatActivity() {
     private val REQUEST_IMAGE_CAPTURE = 1
@@ -34,6 +44,8 @@ class ProfileActivity : AppCompatActivity() {
     private val REQUEST_CAMERA_PERMISSION = 100
     private val REQUEST_STORAGE_PERMISSION = 101
     private val page_name = "Profile"
+    private val client = OkHttpClient()
+    private lateinit var sessionManager: SessionManager
 
     private lateinit var profilePhoto: ImageView
     private lateinit var changePhotoButton: Button
@@ -42,6 +54,8 @@ class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
+
+        sessionManager = SessionManager(this)
 
         val headerButton = findViewById<ImageView>(R.id.main_header_side_button)
         headerButton.setOnClickListener {
@@ -79,27 +93,140 @@ class ProfileActivity : AppCompatActivity() {
         val orderHistoryButton: Button = findViewById(R.id.profile_order_history_button)
         val logoutButton: TextView = findViewById(R.id.logout_button)
         val deleteAccountButton: TextView = findViewById(R.id.delete_account_button)
-
-        profileName.text = "profilename"
-        profileBirthDay.text = "03"
-        profileBirthMonth.text = "07"
-        profileBirthYear.text = "2003"
-        profilePhone.text = "+48728091017"
-        profileEmail.text = "email@email.com"
-
+        
         orderHistoryButton.setOnClickListener {
             Toast.makeText(this, "История заказов", Toast.LENGTH_SHORT).show()
         }
 
         logoutButton.setOnClickListener {
-            Toast.makeText(this, "Выход из аккаунта", Toast.LENGTH_SHORT).show()
-            // Логика для выхода из аккаунта
+            logout()
         }
 
         deleteAccountButton.setOnClickListener {
-            Toast.makeText(this, "Удаление аккаунта", Toast.LENGTH_SHORT).show()
-            // Логика для удаления аккаунта
+            showDeleteAccountConfirmation()
         }
+
+        // Выполнение запроса данных пользователя
+        fetchUserProfile(profileName, profileBirthDay, profileBirthMonth, profileBirthYear, profilePhone, profileEmail)
+    }
+
+    private fun fetchUserProfile(
+        profileName: TextView,
+        profileBirthDay: TextView,
+        profileBirthMonth: TextView,
+        profileBirthYear: TextView,
+        profilePhone: TextView,
+        profileEmail: TextView
+    ) {
+        val authToken = sessionManager.fetchAuthToken()
+
+        val request = Request.Builder()
+            .url("http://5.22.223.21:80/users/get")
+            .get()
+            .addHeader("Authorization", "$authToken")
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+                runOnUiThread {
+                    Toast.makeText(this@ProfileActivity, "Failed to fetch profile: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val responseBody = response.body?.string()
+                if (response.isSuccessful && responseBody != null) {
+                    val jsonObject = JSONObject(responseBody).getJSONObject("message")
+                    val name = jsonObject.getString("name")
+                    val birthDate = jsonObject.getString("date_of_birth")
+                    val phone = jsonObject.getString("Phone_number")
+                    val email = jsonObject.getString("email")
+
+                    // Разделение даты рождения на день, месяц и год
+                    val birthDateParts = birthDate.split("-")
+                    val year = birthDateParts[0]
+                    val month = birthDateParts[1]
+                    val day = birthDateParts[2]
+
+                    runOnUiThread {
+                        profileName.text = name
+                        profileBirthDay.text = day
+                        profileBirthMonth.text = month
+                        profileBirthYear.text = year
+                        profilePhone.text = phone
+                        profileEmail.text = email
+                    }
+                } else {
+                    runOnUiThread {
+                        Toast.makeText(this@ProfileActivity, "Failed to fetch profile: ${response.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
+    }
+
+    private fun showDeleteAccountConfirmation() {
+        AlertDialog.Builder(this)
+            .setTitle("Account Deletion")
+            .setMessage("Are you sure you want to delete the account?")
+            .setPositiveButton("Yes") { dialog, which ->
+                showFinalDeleteAccountConfirmation()
+            }
+            .setNegativeButton("No", null)
+            .show()
+    }
+
+    private fun showFinalDeleteAccountConfirmation() {
+        AlertDialog.Builder(this)
+            .setTitle("Account Deletion")
+            .setMessage("Do you definitely want to delete the account?")
+            .setPositiveButton("Yes") { dialog, which ->
+                deleteAccount()
+            }
+            .setNegativeButton("No", null)
+            .show()
+    }
+
+    private fun deleteAccount() {
+        val authToken = sessionManager.fetchAuthToken()
+
+        val request = Request.Builder()
+            .url("http://5.22.223.21:80/users/delete")
+            .delete()
+            .addHeader("Authorization", "$authToken")
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+                runOnUiThread {
+                    Toast.makeText(this@ProfileActivity, "Failed to delete account: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
+                    runOnUiThread {
+                        Toast.makeText(this@ProfileActivity, "Account successfully deleted", Toast.LENGTH_SHORT).show()
+                        logout()
+                    }
+                } else {
+                    runOnUiThread {
+                        Toast.makeText(this@ProfileActivity, "Failed to delete account: ${response.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
+    }
+
+    private fun logout() {
+        sessionManager.saveAuthToken("")
+        Toast.makeText(this, "Account logout", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 
     private fun selectImage() {
